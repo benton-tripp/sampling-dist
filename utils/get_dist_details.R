@@ -17,18 +17,25 @@ get.dist.details <- function(.dist) {
     )
   } else if (.dist == "Uniform") {
     details$Details <- c(
-      "",
-      "$$a < b, a \\in \\mathbb{R}, b \\in \\mathbb{R}$$",
+      "$$\\mathcal{U}_{[a,b]}$$",
+      "$$-\\infty < a < b < \\infty$$",
       "$$x \\in [a, b]$$",
-      "$$\\frac{1}{b-a}$$",
-      "$$\\frac{x-a}{b-a} \\text{ for } x \\in [a,b]$$"
+      paste0("$$\\begin{cases}{\\frac {1}{b-a}}&{\\text{for }}x\\in [a,b]\\\\",
+             "0&{\\text{otherwise}}\\end{cases}$$"),
+      paste0("$$\\begin{cases}0&{\\text{for }}x < a\\\\", 
+             "{\\frac {x-a}{b-a}}&{\\text{for }}x\\in [a,b]\\\\",
+             "1&{\\text{for }}x > b \\end{cases}$$")
     )
   } else if (.dist == "Beta") {
     details$Details <- c(
-      "",
-      "$$\\alpha > 0, \\beta > 0$$",
+      "$$\\text{Beta}\\left(\\alpha,\\beta\\right)$$",
+      "$$\\alpha > 0 \\text{ (shape),}\\\\ \\beta > 0 \\text{ (shape)}$$",
       "$$x \\in (0, 1)$$",
-      "$$\\frac{x^{\\alpha - 1}(1 - x)^{\\beta - 1}}{B(\\alpha, \\beta)}$$",
+      paste0("$$\\frac{x^{\\alpha - 1}(1 - x)^{\\beta - 1}}{B(\\alpha, \\beta)}\\\\", 
+             "\\text{where }B(\\alpha, \\beta) = ", 
+             "\\frac{\\Gamma(\\alpha)\\Gamma(\\beta)}{\\Gamma(\\alpha+\\beta)},\\\\", 
+             "\\text{and } \\Gamma \\text{ is the Gamma function }", 
+             "\\Gamma(n)=(n-1)!$$"),
       "$$I_x(\\alpha, \\beta)$$"
     )
   } else if (.dist == "Binomial") {
