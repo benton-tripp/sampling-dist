@@ -7,10 +7,5 @@ shinyjs.loading = function() {
 
 // Loading panel/spinner remove function
 shinyjs.finishedLoading = function() {
-  MathJax.Hub.Queue(["Typeset", MathJax.Hub]); // Make sure any math is rendered
   $('.greyed-out').remove();
 };
-
-$(document).ready(function() {
-  MathJax.Hub.Queue(["Typeset", MathJax.Hub]);
-});

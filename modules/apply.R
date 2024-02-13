@@ -34,10 +34,6 @@ apply.module <- function(input, output, session, server.env) {
         ) %>%
           .[distribution == .dist]
         
-        # Render the "Overview"
-        output$formula <- renderText(get.formula(.params))
-        output$code <- renderUI(tags$cod(get.code(.params)))
-        
         # Sample size
         .n <- isolate(input$sampleSize)
         # Population size
@@ -105,6 +101,7 @@ apply.module <- function(input, output, session, server.env) {
         assign("s.dt", value=s.dt, envir=server.env)
         assign("p.dt", value=p.dt, envir=server.env)
         assign(".dist", value=.dist, envir=server.env)
+        assign(".params", value=.params, envir=server.env)
         
         # Trigger update to sample visualizations
         runjs('Shiny.setInputValue("triggerSample", Math.random());')

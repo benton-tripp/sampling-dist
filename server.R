@@ -24,6 +24,7 @@ server <- function(input, output, session) {
   update.params.module(input, output, session, server.env)
   samples.module(input, output, session, server.env)
   sampling.dist.module(input, output, session, server.env)
+  dist.summary.module(input, output, session, server.env)
   
   # Load initial plots/stats/data
   shinyjs::click("apply")

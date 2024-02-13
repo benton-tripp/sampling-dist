@@ -15,47 +15,29 @@ ui <- fluidPage(
     tags$title("Sampling Distributions"),
     tags$link(rel="shortcut icon", href="favicon.ico"),
     tags$head(
+      tags$link(
+        rel = "stylesheet", 
+        href = "https://cdn.jsdelivr.net/npm/katex@0.15.2/dist/katex.min.css", 
+        integrity = "sha384-MlJdn/WNKDGXveldHDdyRP1R4CTHr3FeuDNfhsLPYrq2t0UBkUdK2jyTnXPEK1NQ", 
+        crossorigin = "anonymous"
+      ),
       tags$script(
-        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML"
+        defer = "", 
+        src = "https://cdn.jsdelivr.net/npm/katex@0.15.2/dist/katex.min.js", 
+        integrity = "sha384-VQ8d8WVFw0yHhCk5E8I86oOhv48xLpnDZx5T9GogA/Y84DcCKWXDmSDfn13bzFZY", 
+        crossorigin = "anonymous"
+      ),
+      tags$link(
+        rel="stylesheet",
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css",
+        integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==",
+        crossorigin="anonymous",
+        referrerpolicy="no-referrer"
       )
     ),
   ),
   title="Sampling Distributions",
-  div(
-    class="shiny-row",
-    h2("Sampling Distribution Examples"),
-    div(
-      id="overviewSection",
-      h4(
-        style="margin-top:25px;",
-        "Dist. Overview:"
-      ),
-      div(
-        class="shiny-row",
-        style="margin-left:10px",
-        div(
-          class="shiny-col",
-          style="text-align: right;",
-          tags$b(
-            style="margin-right:5px; margin-top:15px; margin-bottom:5px;", 
-            "Formula:"
-          ),
-          tags$b(
-            style="margin-right:5px; margin-top:8px; margin-bottom:5px;", 
-            "Code:"
-          ),
-        ),
-        div(
-          class="shiny-col",
-          textOutput("formula"),
-          div(
-            style="margin-bottom:5px;",
-            uiOutput("code")
-          )
-        )
-      )
-    )
-  ),
+  h2("Sampling Distribution Examples"),
   div(
     id="layoutSection",
     class="wrapper",
@@ -151,9 +133,30 @@ ui <- fluidPage(
         div(
           id="displaySelect",
           tags$b(style="margin:5px;", "Select Display:"),
-          selectInput(inputId="vizType", label=NULL,
-                      choices=c("Plot", "Summary Statistics",
-                                "Data Preview"))
+          div(
+            style="max-width: 150px;",
+            selectInput(inputId="vizType", label=NULL,
+                        choices=c("Plot", "Summary Statistics",
+                                  "Data Preview"))
+          )
+        ),
+        tags$button(
+          id="showSummary",
+          type="button",
+          class="btn btn-default action-button shiny-bound-input",
+          style="max-height:35px;",
+          div(
+            style="shiny-row",
+            tags$i(
+              style="margin-right:5px; font-size:20px;",
+              class="fa fa-info-circle",
+              `aria-hidden`="true"
+            ),
+            tags$span(
+              style="position: relative; top: -2px;",
+              "Show Distribution Overview"
+            )
+          )
         )
       ),
       div(
