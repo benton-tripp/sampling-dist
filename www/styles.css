@@ -50,6 +50,10 @@
   margin-bottom: 0 !important;
 }
 
+#sampleDistVizHeader .form-group {
+  margin-bottom: 8px !important;
+}
+
 #displaySelect {
   margin-right: 30px;
 }

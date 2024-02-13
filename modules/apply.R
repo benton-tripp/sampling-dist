@@ -95,6 +95,12 @@ apply.module <- function(input, output, session, server.env) {
         .round <- ifelse(.dist %in% c("Binomial", "Geometric", "Poisson"), 0, 5)
         output$pop_data <- renderDT(data.preview(p.dt, .round, "Population Data Preview"))
         
+        output$pop_summary <- renderDT({
+          tryCatch({
+            get.summary.stats(p.dt) %>%
+              summary.table()
+          }, error=function(e) NULL)
+        })
         # Assign values to server environment
         assign(".n", value=.n, envir=server.env)
         assign(".N", value=.N, envir=server.env)

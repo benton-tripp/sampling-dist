@@ -173,7 +173,11 @@ ui <- fluidPage(
           ),
           conditionalPanel(
             "input.vizType === 'Summary Statistics'",
-            
+            class="preview-data",
+            div(
+              style="margin-top:45px;",
+              DTOutput("pop_summary")
+            )
           ),
           conditionalPanel(
             "input.vizType === 'Data Preview'",
@@ -207,7 +211,10 @@ ui <- fluidPage(
             ),
             conditionalPanel(
               "input.vizType === 'Summary Statistics'",
-              
+              div(
+                class="preview-data",
+                DTOutput("samp_summary")
+              )
             ),
             conditionalPanel(
               "input.vizType === 'Data Preview'",
@@ -243,7 +250,10 @@ ui <- fluidPage(
             ),
             conditionalPanel(
               "input.vizType === 'Summary Statistics'",
-              
+              div(
+                class="preview-data",
+                DTOutput("samp_dist_summary")
+              )
             ),
             conditionalPanel(
               "input.vizType === 'Data Preview'",

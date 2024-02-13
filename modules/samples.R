@@ -8,20 +8,30 @@ samples.module <- function(input, output, session, server.env) {
     .dist <- get(".dist", server.env)
     
     # Population Density Plot
-    s.plot <- ggplot(data=s.dt, aes(x=y, y=after_stat(density))) +
-      geom_histogram(fill="white", color="black")
-    if (!(.dist %in% c("Binomial", "Geometric", "Poisson"))) {
-      s.plot <- s.plot + geom_density(color="darkblue", 
+    s.plot <- tryCatch({
+      .plot <- ggplot(data=s.dt, aes(x=y, y=after_stat(density))) +
+        geom_histogram(fill="white", color="black")
+      if (!(.dist %in% c("Binomial", "Geometric", "Poisson"))) {
+        .plot <- .plot + geom_density(color="darkblue", 
                                       linetype="dashed", linewidth=1.2)
-    }
-    s.plot <- s.plot + theme_minimal() +
-      labs(title=paste("Density - Sample #", input$sampleDatasets),
-           y="Density", x="Sampled y-values")
+      }
+      .plot + theme_minimal() +
+        labs(title=paste("Density - Sample #", input$sampleDatasets),
+             y="Density", x="Sampled y-values")
+    }, error=function(e) NULL)
     
     .round <- ifelse(.dist %in% c("Binomial", "Geometric", "Poisson"), 0, 5)
-    output$samp_data <- renderDT(data.preview(s.dt, .round, "Sample Data Preview"))
-    
+    output$samp_data <- renderDT({
+      tryCatch({data.preview(s.dt, .round, "Sample Data Preview")},
+               error=function(e) NULL)
+    })
     output$samp_dens <- renderPlot(s.plot)
+    output$samp_summary <- renderDT({
+      tryCatch({
+        get.summary.stats(s.dt) %>%
+          summary.table()
+      }, error=function(e) NULL)
+    })
   }, ignoreInit=T, ignoreNULL=T)
   
 }

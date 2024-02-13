@@ -20,14 +20,18 @@ sampling.dist.module <- function(input, output, session, server.env) {
       return(s.summary)
     })
     
+    # Create Summary Table
     summary.stats <- names(sd.dt) %>%
-      purrr::set_names() %>%
-      purrr::map(
-        ~get.summary.stats(sd.dt, .x)
-      )
-    
-    # Create Summary Tables
-    
+      purrr::map2_df(.x=., .y=c("Sample Mean", "Sample Variance",
+                                "Sample Standard Deviation", "Sample Median",
+                                "Sample Min.", "Sample Max.", 
+                                "Standardized Sample Mean"), ~{
+        do.call("cbind", list(
+          data.table(stat=.y), 
+          get.summary.stats(sd.dt, .x))
+        )
+      })
+    assign("summary.stats", value=summary.stats, envir=sampling.dist.env)
     assign("sd.dt", value=sd.dt, envir=sampling.dist.env)
     
     # Trigger Plot Update
@@ -36,7 +40,11 @@ sampling.dist.module <- function(input, output, session, server.env) {
   
   observeEvent(c(input$selectStat, input$triggerSamplingDistPlot), {
     sd.dt <- get("sd.dt", sampling.dist.env) 
+    summary.stats <- get("summary.stats", sampling.dist.env) %>%
+      .[stat == input$selectStat, 2:ncol(.), with=F]
     .dist <- get(".dist", server.env)
+    
+    output$samp_dist_summary <- renderDT(summary.table(summary.stats))
     
     .selected.stat <- case_when(
       input$selectStat=="Sample Mean"~".mean",
