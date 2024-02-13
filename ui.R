@@ -134,7 +134,7 @@ ui <- fluidPage(
           id="displaySelect",
           tags$b(style="margin:5px;", "Select Display:"),
           div(
-            style="max-width: 150px;",
+            style="max-width: 170px;",
             selectInput(inputId="vizType", label=NULL,
                         choices=c("Plot", "Summary Statistics",
                                   "Data Preview"))

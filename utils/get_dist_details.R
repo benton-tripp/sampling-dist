@@ -36,36 +36,42 @@ get.dist.details <- function(.dist) {
              "\\frac{\\Gamma(\\alpha)\\Gamma(\\beta)}{\\Gamma(\\alpha+\\beta)},\\\\", 
              "\\text{and } \\Gamma \\text{ is the Gamma function }", 
              "\\Gamma(n)=(n-1)!$$"),
-      "$$I_x(\\alpha, \\beta)$$"
+      paste0("$$I_x(\\alpha, \\beta) = ",
+             "\\frac{\\mathrm{B}(x;\\;\\alpha,\\beta)}{\\mathrm{B}(\\alpha,\\beta)}",
+             "\\\\ \\text{(regularized incomplete beta function)}$$")
     )
   } else if (.dist == "Binomial") {
     details$Details <- c(
-      "",
-      "$$n \\in \\{0,1,2,\\dots\\}, 0 \\leq p \\leq 1$$",
-      "$$k \\in \\{0,1,2,\\dots,n\\}$$",
+      "$$B(n,p)$$",
+      paste0("$$n \\in \\{0,1,2,\\dots\\} \\text{ (number of trials)},\\\\",
+             "p \\in \\[0,1\\] \\text{ (probability of success for each trial)}$$"),
+      "$$k \\in \\{0,1,2,\\dots,n\\} \\text{ (number of successes)}$$",
       "$$\\binom{n}{k} p^k (1-p)^{n-k}$$",
-      "$$I_{1-p}(n-k, k+1) \\text{ or equivalent expressions}$$"
+      "$$I_{1-p}(n-k, k+1) \\text{ (regularized incomplete beta function)}$$"
     )
   } else if (.dist == "Cauchy") {
     details$Details <- c(
-      "",
-      "$$x_0 \\in \\mathbb{R}, \\gamma > 0$$",
+      "$$Cauchy(x_0, \\gamma)$$",
+      "$$x_0\\in\\mathbb{R}\\text{ (location)},\\\\ \\gamma>0\\text{ (scale)}$$",
       "$$x \\in (-\\infty, +\\infty)$$",
       "$$\\frac{1}{\\pi \\gamma \\left[1 + \\left(\\frac{x - x_0}{\\gamma}\\right)^2\\right]}$$",
       "$$\\frac{1}{\\pi} \\arctan\\left(\\frac{x - x_0}{\\gamma}\\right) + \\frac{1}{2}$$"
     )
   } else if (.dist == "Chi-Square") {
     details$Details <- c(
-      "",
-      "$$k > 0, k \\in \\mathbb{N}$$",
-      "$$x \\in (0, +\\infty)$$",
+      "$$\\chi^{2}(k)\\text{ or }\\chi_{k}^{2}$$",
+      "$$k > 0, k \\in \\mathbb{N} \\text{ (known as 'degrees of freedom')}$$",
+      "$$x\\in(0,\\infty)\\text{ if }k=1\\text{, otherwise }x\\in[0,\\infty)$$",
       "$$\\frac{1}{2^{k/2}\\Gamma(k/2)} x^{k/2 - 1}e^{-x/2}$$",
-      "$$1 - \\frac{\\Gamma(k/2, x/2)}{\\Gamma(k/2)}$$"
+      paste0("$$\\frac{1}{\\Gamma(k/2)}\\gamma",
+             "\\left(\\frac{k}{2},\\frac{x}{2}\\right),\\\\",
+             "\\text{where }\\gamma(s,t)",
+             "\\text{ is the lower incomplete gamma function}$$")
     )
   } else if (.dist == "Exponential") {
     details$Details <- c(
-      "",
-      "$$\\lambda > 0$$",
+      "$$Exp(\\lambda)$$",
+      "$$\\lambda > 0\\text{, where }\\lambda\\text{ is the rate, or inverse scale}$$",
       "$$x \\in [0, \\infty)$$",
       "$$\\lambda e^{-\\lambda x}$$",
       "$$1 - e^{-\\lambda x}$$"
@@ -80,19 +86,20 @@ get.dist.details <- function(.dist) {
     )
   } else if (.dist == "Geometric") {
     details$Details <- c(
-      "",
-      "$$0 < p < 1$$",
+      "$$G(p)$$",
+      "$$0 < p \\le 1 \\text{ (probability of success)}$$",
       "$$k \\in \\{0, 1, 2, \\dots\\}$$",
       "$$p(1-p)^k$$",
-      "$$1 - (1-p)^{k+1}$$"
+      "$$1 - (1-p)^{k+1}\\text{ for }k\\ge0,\\;0\\text{ for }k<0$$"
     )
   } else if (.dist == "Poisson") {
     details$Details <- c(
-      "",
-      "$$\\lambda > 0$$",
+      "$$Pois(\\lambda)$$",
+      "$$\\lambda \\in (0,\\infty)\\text{ (rate)}$$",
       "$$k \\in \\{0, 1, 2, \\dots\\}$$",
       "$$\\frac{e^{-\\lambda}\\lambda^k}{k!}$$",
-      "$$\\frac{\\Gamma(k+1, \\lambda)}{k!}$$"
+      paste0("$$\\frac{\\Gamma(k+1, \\lambda)}{k!}\\\\",
+             "\\text{where }\\Gamma(x,y)\\text{ is the upper incomplete gamma function}$$")
     )
   } 
   return(details)
